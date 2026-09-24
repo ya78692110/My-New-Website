@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yasir Alee - I.T Student</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Pure page par ek hi image fixed kar di hai, taaki har section par uska alag part dikhe */
+        body {
+            background: url('bg1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Image ke upar halka dark tint dene ke liye overall dark overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 15, 25, 0.85);
+            z-index: -1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(11, 15, 25, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #1a233a;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            margin: 0 auto;
+        }
+
+        .nav-links a {
+            color: #8b9bb4;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #ffffff;
+        }
+
+        section {
+            padding: 120px 50px 80px 50px; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid rgba(26, 35, 58, 0.6);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        section.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        #home { 
+            flex-direction: row;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 5px; 
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            color: #4da6ff;
+            margin-bottom: 30px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            border: 1px solid #ffffff;
+            background: transparent;
+            color: #ffffff;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #ffffff;
+            color: #0b0f19;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .about-text p {
+            color: #8b9bb4;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .location {
+            font-size: 13px;
+            color: #4da6ff;
+        }
+
+        /* Resume Section */
+        #resume {
+            padding: 100px 50px;
+            align-items: center;
+        }
+
+        .resume-wrapper {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            min-height: 480px;
+            overflow: hidden;
+        }
+
+        .resume-slide {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(40px) scale(0.97);
+            transition: all 3.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .resume-slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0) scale(1);
+            position: relative;
+        }
+
+        .resume-slide img {
+            width: 100%;
+            max-width: 750px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #1a233a;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            transition: transform 0.3s ease;
+        }
+
+        .resume-slide img:hover {
+            transform: scale(1.01);
+        }
+
+        .resume-details h3 {
+            font-size: 24px;
+            color: #4da6ff;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .resume-details p {
+            font-size: 15px;
+            color: #8b9bb4;
+            margin-bottom: 4px;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        /* Portfolio Section */
+        #portfolio {
+            text-align: center;
+        }
+
+        @media(max-width: 900px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            header {
+                padding: 20px;
+            }
+            section {
+                padding: 100px 20px 50px 20px;
+            }
+            .resume-slide img {
+                height: 230px;
+            }
+            .resume-wrapper {
+                min-height: 350px;
+            }
+        }
+
+        footer {
+            background-color: white; 
+            height: 50px; 
+            color: black; 
+            text-align: center; 
+            font-weight: 600;  
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <ul class="nav-links">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#resume">Resume</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+        </ul>
+    </header>
+
+    <section id="home">
+        <div class="hero-content">
+            <h1 style="font-size: 60px;">YASAR KHASKHELI</h1>
+            <p>I.T Student</p>
+            <div class="btn-group">
+                <button class="btn" onclick="location.href='#resume'">Resume</button>
+                <button class="btn" onclick="location.href='#portfolio'">Portfolio</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="about-grid">
+            <div class="about-text" style="text-align: left;">
+                <h2 class="section-title" style="text-align: left;">ABOUT</h2>
+                <p style="color: #4da6ff; font-size: 13px;">ya78692110@gmail.com</p>
+                <p>Hello! I am a web developer and D.I.T student. I like building clean and responsive web pages using HTML and CSS, and I am always learning new things in technology.</p>
+                <div class="location">
+                    National Institute Of Computer Education<br>
+                    Shahdadpur, Sindh<br>
+                    Pakistan
+                </div>
+            </div>
+            <div>
+                <div><img src="yasir1.jpg" alt="Yasir Photo" style="background: #1a233a; width: 100%; height: 400px; object-fit: cover; border-radius: 40px; display: flex; align-items: center; justify-content: center; color: #8b9bb4;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="resume">
+        <div class="resume-wrapper">
+            <h2 class="section-title" style="margin-bottom: 20px; text-align: center; color: #4da6ff">RESUME</h2>
+
+            <!-- Slide 1: DIT -->
+            <div class="resume-slide active">
+                <img src="nice1.jpg" alt="DIT Image">
+                <div class="resume-details">
+                    <h3>Diploma in Information Technology (D.I.T.)</h3>
+                    <p><b>Institute:</b> National Institute Of Computer Education</p>
+                    <p><b>Duration:</b> 2025-2026 | <b>Status:</b> Second Semester</p>
+                </div>
+            </div>
+
+            <!-- Slide 2: Intermediate -->
+            <div class="resume-slide">
+                <img src="collage.png" alt="College Image">
+                <div class="resume-details">
+                    <h3>Intermediate (F.Sc. Pre-Medical)</h3>
+                    <p><b>Institute:</b> Government Boys Degree College Shahdadpur</p>
+                    <p><b>Year:</b> 2024</p>
+                </div>
+            </div>
+
+            <!-- Slide 3: Matriculation -->
+            <div class="resume-slide">
+                <img src="high.jpg" alt="School Image">
+                <div class="resume-details">
+                    <h3>Matriculation</h3>
+                    <p><b>Institute:</b> Government Boys High School Lal Bhag</p>
+                </div>
+            </div>
+
+            <!-- Slide 4: Skills -->
+            <div class="resume-slide">
+                <img src="skills.png" alt="Skills Image">
+                <div class="resume-details">
+                    <h3>DESIGN & TECHNICAL SKILLS</h3>
+                    <p>Web Design / Development &bull; Programming Languages C++ &bull; Databases &bull; Networking &bull; Hardware</p>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="slider-controls">
+                <button class="btn" onclick="prevSlide()">❮ Previous</button>
+                <button class="btn" onclick="nextSlide()">Next ❯</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <h2 class="section-title">PORTFOLIO</h2>
+        <p style="color: #8b9bb4; margin-bottom: 25px;">Here are some files I created that you can download and check out.</p>
+        
+        <div class="btn-group">
+            <a href="assign.pdf" target="_blank" class="btn" style="text-decoration: none; display: inline-block; text-align: center;">Portfolio Assignment</a>
+            <a href="sue.pdf" target="_blank" class="btn" style="text-decoration: none; display: inline-block; text-align: center;">Computer Hardware Explain</a>
+            <a href="clf.pdf" target="_blank" class="btn" style="text-decoration: none; display: inline-block; text-align: center;">C-language Basic Programs</a>
+        </div>
+    </section>
+
+    <footer> 
+        📩 ya78692110@gmail.com
+    </footer>
+
+    <script>
+        const sections = document.querySelectorAll('section');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, {
+            threshold: 0.15
+        });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        window.addEventListener("wheel", function (e) {
+            e.preventDefault();
+            window.scrollBy({
+                top: e.deltaY * 0.8,
+                behavior: "smooth"
+            });
+        }, { passive: false });
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.resume-slide');
+
+        function showSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (index + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+    </script>
+</body>
+</html>
